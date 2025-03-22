@@ -4,6 +4,16 @@ import tkinter as tk
 import subprocess
 import os
 import json
+import sys
+
+def resource_path(relative_path):
+    """ Obtém o caminho absoluto para recursos empacotados """
+    if hasattr(sys, '_MEIPASS'):
+        # Estamos rodando em um PyInstaller bundle
+        return os.path.join(sys._MEIPASS, relative_path)
+    # Estamos rodando em modo de desenvolvimento normal
+    return relative_path  # Corrigido aqui
+
 
 home_folder = os.path.expanduser('~')
 profile_folder = home_folder + "/.config/scrctl"
@@ -54,7 +64,10 @@ def profile_switch(_):
     bright.delete(0, tk.END)
     bright.insert(0, str(profiles[combo.get()]["bright"]))
 
-root = Tk(baseName="x11screencontrol")
+root = Tk(baseName="x11screencontrol", className="xorgscreencontrol")
+root.tk.call('source', resource_path('forest-light.tcl'))
+ttk.Style().theme_use('forest-light')
+
 root.title("X11 Screen Control")
 frm = ttk.Frame(root, padding=50)
 frm.grid()

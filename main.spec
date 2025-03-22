@@ -5,7 +5,7 @@ a = Analysis(
     ['main.py'],
     pathex=[],
     binaries=[],
-    datas=[],
+    datas=[('forest-light.tcl', '.'), ('forest-light', 'forest-light')],
     hiddenimports=[],
     hookspath=[],
     hooksconfig={},
