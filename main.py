@@ -26,19 +26,19 @@ else:
         profiles = {
                 "Profile 1": {
                     "gamma": 4500,
-                    "bright": 1
+                    "bright": 100
                 },
                 "Profile 2": {
                     "gamma": 4500,
-                    "bright": 1
+                    "bright": 100
                 },
                 "Profile 3": {
                     "gamma": 4500,
-                    "bright": 1
+                    "bright": 100
                 },
                 "Profile 4": {
                     "gamma": 4500,
-                    "bright": 1
+                    "bright": 100
                 }
         }
         os.makedirs(profile_folder, exist_ok=True)
@@ -47,10 +47,10 @@ else:
 
 def apply():
     print(f"gamma={gamma.get()} bright={bright.get()} profile={combo.get()}")
-    subprocess.run("gammastep -m randr -x", shell=True, text=True, capture_output=True)
-    subprocess.run(f"xrandr --output HDMI-1 --brightness {bright.get()}", shell=True, text=True, capture_output=True)
-    subprocess.run(f"xrandr --output eDP-1 --brightness {bright.get()}", shell=True, text=True, capture_output=True)
-    subprocess.run(f"gammastep -m randr -O {gamma.get()}", shell=True, text=True, capture_output=True)
+    subprocess.run("pkill gammastep", shell=True, text=True, capture_output=True)
+    subprocess.run(f"brightnessctl set {bright.get()}%", shell=True, text=True, capture_output=True)
+    subprocess.run(f"ddcutil --verbose setvcp 10 {bright.get()}", shell=True, text=True, capture_output=True)
+    subprocess.Popen(["gammastep", "-m", "wayland", "-O", str(gamma.get())], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
     save()
 
 def save():
