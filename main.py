@@ -64,11 +64,11 @@ def profile_switch(_):
     bright.delete(0, tk.END)
     bright.insert(0, str(profiles[combo.get()]["bright"]))
 
-root = Tk(baseName="x11screencontrol", className="xorgscreencontrol")
+root = Tk(baseName="wayscreencontrol", className="wayscreencontrol")
 root.tk.call('source', resource_path('forest-light.tcl'))
 ttk.Style().theme_use('forest-light')
 
-root.title("X11 Screen Control")
+root.title("Wayland Screen Control")
 frm = ttk.Frame(root, padding=50)
 frm.grid()
 
